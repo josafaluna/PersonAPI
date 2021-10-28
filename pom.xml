@@ -8,6 +8,7 @@
 		<version>2.4.12</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	
 	<groupId>one.digitalinnovation</groupId>
 	<artifactId>personapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -15,6 +16,7 @@
 	<description>Person API</description>
 	<properties>
 		<java.version>11</java.version>
+		<jvm.options>--illegal-access=permit</jvm.options>
 	</properties>
 	<dependencies>
 		<dependency>
