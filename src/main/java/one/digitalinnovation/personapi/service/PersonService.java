@@ -29,10 +29,9 @@ public class PersonService {
 	public MessageResponseDTO createPerson(PersonDTO personDTO) {
 
 		Person personToSave = personMapper.toModel(personDTO);
-
 		Person savedPerson = repository.save(personToSave);
 
-		return MessageResponseDTO.builder().message("Created person with ID " + savedPerson.getId()).build();
+		return createMessageResponse(savedPerson.getId(), "Created person with ID ");
 	}
 
 	@Transactional(readOnly = true)
@@ -65,13 +64,23 @@ public class PersonService {
 		repository.delete(person);
 	}
 
-	/**
-	 * @param id
-	 * @return
-	 * @throws PersonNotFoundException
-	 */
+	@Transactional
+	public MessageResponseDTO replace(PersonDTO personDTO, Long id) throws PersonNotFoundException {
+		verifyIfExists(id);
+
+		Person personTUpdate = personMapper.toModel(personDTO);
+		Person UpdatePerson = repository.save(personTUpdate);
+
+		return createMessageResponse(UpdatePerson.getId(), "Update person with ID ");
+
+	}
+
 	private Person verifyIfExists(Long id) throws PersonNotFoundException {
 		return repository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
+	}
+
+	private MessageResponseDTO createMessageResponse(Long id, String message) {
+		return MessageResponseDTO.builder().message(message + id).build();
 	}
 
 }
