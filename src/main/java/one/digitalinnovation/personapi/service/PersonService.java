@@ -54,16 +54,24 @@ public class PersonService {
 //			throw new PersonNotFoundException(id);
 //		}
 // 		REFATORADO
-
-		Person person = repository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
+		Person person = verifyIfExists(id);
 
 		return personMapper.toDTO(person);
 	}
 
 	@Transactional
-	public PersonDTO replace(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Long id) throws PersonNotFoundException {
+		Person person = verifyIfExists(id);
+		repository.delete(person);
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws PersonNotFoundException
+	 */
+	private Person verifyIfExists(Long id) throws PersonNotFoundException {
+		return repository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
 	}
 
 }
