@@ -7,4 +7,5 @@ import one.digitalinnovation.personapi.entity.Person;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
+
 }
